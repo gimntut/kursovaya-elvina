@@ -5,8 +5,8 @@
   <title>Каталог магазина</title>
 </head>
 <body>
-  <a href="/registr">Регистрация</a>
-  <a href="/card">Корзина</a>
+  <a href="/registr.php">Регистрация</a>
+  <a href="/card.php">Корзина</a>
   <?php 
     $host = '127.0.0.1';
     $db   = 'magazin';
@@ -26,10 +26,11 @@
       <tr>
         <th>Название</th>
         <th>Цена, руб.</th>
+        <th>Кнопки</th>
       </tr>
     <?php
     while ($row = $stmt->fetch()){ 
-        echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td> </tr>tr>";
+        echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td><td></td></tr>";
      } ?>
      </table>
 </body>
