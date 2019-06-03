@@ -21,12 +21,16 @@
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
 
-    $stmt = $pdo->query('SELECT name, price FROM catalog');
-    while ($row = $stmt->fetch())
-    {
-        echo $row['name'] . "\n";
-        echo $row['price'] . "\n";
-    }
-  ?>
+    $stmt = $pdo->query('SELECT name, price FROM catalog'); ?>
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>Цена, руб.</th>
+      </tr>
+    <?php
+    while ($row = $stmt->fetch()){ 
+        echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td> </tr>tr>";
+     } ?>
+     </table>
 </body>
 </html>
