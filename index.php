@@ -20,6 +20,13 @@
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
     $pdo = new PDO($dsn, $user, $pass, $opt);
+
+    $stmt = $pdo->query('SELECT name, price FROM catalog');
+    while ($row = $stmt->fetch())
+    {
+        echo $row['name'] . "\n";
+        echo $row['price'] . "\n";
+    }
   ?>
 </body>
 </html>
