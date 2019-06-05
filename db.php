@@ -12,9 +12,14 @@ $pdo = new PDO($dsn, $user, $pass, $opt);
 function do_query($sql, $params)
 {
     global $pdo;
-    $sql = 'SELECT id FROM users WHERE login=? AND password=?';
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
+    if ($stmt->errorCode()*1) {
+    	echo "<pre>".$stmt->errorCode()."</pre>";
+    	echo "<pre>".print_r($stmt->errorInfo(), true)."</pre>";
+    	echo "<pre>".print_r($pdo->errorInfo(), true)."</pre>";
+    	die();
+    }
     return $stmt;
 }
 

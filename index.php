@@ -10,17 +10,19 @@
 <body>
   <?php
   session_start();
-  if ($_SESSION['user_id']) {
-    echo "Привет ${_SESSION['user_name']}";
+  $logged=$_SESSION['user_id'];
+  if ($logged) {
+    echo "Привет ${_SESSION['user_name']}<br />" . '<a href="/card.php">Корзина</a>';
   } else {
-    echo '<a href="/login.php">Войти</a>';
-    echo '<a href="/register.php">Регистрация</a>';
+    echo '<a href="/login.php">Войти</a>
+    <a href="/register.php">Регистрация</a>
+    <div>Войдите, чтобы купить</div>';
   }
   ?>
-  <a href="/card.php">Корзина</a>
+  <h1>Каталог магазина</h1>
   <?php
   require_once('db.php');
-  $stmt = $pdo->query('SELECT name, price FROM catalog'); ?>
+  $stmt = $pdo->query('SELECT * FROM catalog'); ?>
 
   <table>
     <tr>
@@ -30,8 +32,11 @@
     </tr>
     <?php
     while ($row = $stmt->fetch()) {
-      echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td><td></td></tr>";
-    } ?>
+      $button=$logged ?"<a href='/basket/add.php?product=${row['id']}'>➕</a>":'';
+      echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td><td>$button</td></tr>";
+    } 
+    $stmt->closeCursor();
+    ?>
   </table>
 </body>
 
