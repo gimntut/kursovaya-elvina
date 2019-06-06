@@ -10,17 +10,15 @@
 <body>
   <?php
   session_start();
-  $logged=$_SESSION['user_id'];
+  $logged = $_SESSION['user_id'];
   if ($logged) {
-    echo "Привет ${_SESSION['user_name']}<br />" . '<a href="/card.php">Корзина</a>';
+    echo "Привет ${_SESSION['user_name']}<br />" . '<a href="/basket.php">Корзина</a>';
   } else {
     echo '<a href="/login.php">Войти</a>
     <a href="/register.php">Регистрация</a>
     <div>Войдите, чтобы купить</div>';
   }
-  ?>
-  <h1>Каталог магазина</h1>
-  <?php
+  echo "<h1>Каталог магазина</h1>";
   require_once('db.php');
   $stmt = $pdo->query('SELECT * FROM catalog'); ?>
 
@@ -32,10 +30,12 @@
     </tr>
     <?php
     while ($row = $stmt->fetch()) {
-      $button=$logged ?"<a href='/basket/add.php?product=${row['id']}'>➕</a>":'';
-      echo "<tr> <td>${row['name']}</td>  <td>${row['price']}</td><td>$button</td></tr>";
-    } 
-    $stmt->closeCursor();
+      $button = $logged ? "<form action='/post/add_to_basket.php' method='post'>
+      <input type='hidden' name=product value=${row['id']}>
+      <input type='submit' value='➕'>
+      </form>" : '';
+      echo "<tr><td>${row['name']}</td>  <td>${row['price']}</td> <td>$button</td></tr>";
+    }
     ?>
   </table>
 </body>
